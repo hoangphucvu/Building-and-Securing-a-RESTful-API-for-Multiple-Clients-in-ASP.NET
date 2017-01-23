@@ -196,6 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="ViewModels\ReviewViewModel.cs" />
     <Compile Include="Core\BooksContext.cs" />
     <Compile Include="Core\BookUserManager.cs" />
     <Compile Include="Core\BookUserStore.cs" />
@@ -223,7 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
