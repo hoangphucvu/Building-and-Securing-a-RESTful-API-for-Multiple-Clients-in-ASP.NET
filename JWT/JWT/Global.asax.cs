@@ -18,6 +18,7 @@ namespace JWT
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             Database.SetInitializer(new Initializer());
+            GlobalConfiguration.Configure(FilterConfig.Configure);
         }
     }
 }

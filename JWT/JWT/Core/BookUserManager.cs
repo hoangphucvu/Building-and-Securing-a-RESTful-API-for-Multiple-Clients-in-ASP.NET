@@ -10,7 +10,6 @@ namespace JWT.Core
     public class BookUserManager : UserManager<IdentityUser>
     {
         public BookUserManager() : base(new BookUserStore())
-
         {
         }
     }
