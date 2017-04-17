@@ -14,5 +14,10 @@ namespace Library.API.Models
         public DateTimeOffset DateOfBirth { get; set; }
 
         public string Genre { get; set; }
+        /// <summary>
+        /// using new list to prevent null ref exception
+        /// </summary>
+
+        public ICollection<BookForCreationDto> Books { get; set; } = new List<BookForCreationDto>();
     }
 }
