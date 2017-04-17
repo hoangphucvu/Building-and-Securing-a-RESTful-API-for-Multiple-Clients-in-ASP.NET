@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer
 {
@@ -17,23 +18,29 @@ namespace IdentityServer
         //The AddTemporarySigningCredential extension creates temporary key material for signing tokens on every start
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer().AddTemporarySigningCredential();
+            services.AddIdentityServer()
+                .AddTemporarySigningCredential()
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients());
         }
+
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                app.UseDeveloperExceptionPage();
-            }
-            app.UseIdentityServer();
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
+                Authority = "http://localhost:7060",
+                RequireHttpsMetadata = false,
+
+                ApiName = "api1"
             });
+
+            app.UseMvc();
         }
     }
 }
