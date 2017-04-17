@@ -61,6 +61,7 @@ namespace Library.API
             }
             else
             {
+                //exception handler for production env
                 app.UseExceptionHandler(appBuilder =>
                 {
                     appBuilder.Run(async context =>
@@ -80,6 +81,7 @@ namespace Library.API
                 cfg.CreateMap<Book, BookDto>();
 
                 cfg.CreateMap<AuthorForCreationDto, Author>();
+                cfg.CreateMap<BookForCreationDto, Book>();
             });
             libraryContext.EnsureSeedDataForContext();
 
