@@ -7,6 +7,7 @@ using Library.API.Services;
 using Library.API.Entities;
 using Library.API.Helpers;
 using Library.API.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API
@@ -54,7 +55,14 @@ namespace Library.API
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("Try again later");
+                    });
+                });
             }
 
             AutoMapper.Mapper.Initialize(cfg =>
